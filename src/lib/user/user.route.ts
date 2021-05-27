@@ -1,6 +1,6 @@
 import { UserController } from "./user.controller";
 import { Router } from "express";
-import { validationMiddleware } from "../../middleware/validaton.middleware";
+import { validationMiddleware } from "../../middleware/validation.middleware";
 import { UserDto } from "./user.dto";
 import { checkIsLoggedIn, guest } from "../../middleware/auth.middleware";
 
@@ -54,6 +54,12 @@ export class UserRoute {
       "/role",
       checkIsLoggedIn(),
       this._userController.getRoles
+    )
+
+    this._userController.router.get(
+      "/acl",
+      checkIsLoggedIn(),
+      this._userController.getAcls
     )
 
     return this._userController.router;

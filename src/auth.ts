@@ -9,8 +9,9 @@ export const isLoggedIn = (req: AuthRequest) =>{
   return false
 } 
 
-export const logIn = (req: AuthRequest, userId: string) => {
+export const logIn = (req: AuthRequest, userId: string, roleId:string) => {
   req.session.userId = userId;
+  req.session.roleId = roleId;
   req.session.createdDate = Date.now();
 };
 

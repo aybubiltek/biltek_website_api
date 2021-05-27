@@ -12,6 +12,7 @@ import mongoose from 'mongoose';
 import { RoleDto } from '../acl/role-manager/role.dto';
 import { AclDto } from '../acl/acl.dto';
 import { AclService } from '../acl/acl.service';
+import RoleModel from '../acl/role-manager/role.model';
 
 export class UserController implements IController {
   private _userService: UserService;
@@ -56,7 +57,7 @@ export class UserController implements IController {
     next: NextFunction
   ) => {
     try {
-      const result = await this._userService.find({}, {});
+      const result = await this._userService.find({}, {},  {lean:true, populate:{path:"roleId", match: true, model:RoleModel}});
       const userDto: UserDto[] = (result as unknown) as UserDto[];
 
       res.status(200).json({
@@ -87,7 +88,7 @@ export class UserController implements IController {
         throw new BadRequest("Incorrect email or password");
       }
 
-      logIn(req, userDto._id.toHexString());
+      logIn(req, userDto._id.toHexString(), (userDto.roleId as unknown as string));
 
       res.status(200).json({
         status: "success",
@@ -120,7 +121,7 @@ export class UserController implements IController {
         req.body as UserDto
       )) as unknown as DocumentType<User>;
 
-      logIn(req, user._id.toHexString());
+      logIn(req, user._id.toHexString(), (user.roleId as unknown as string));
 
       const link = user.verificationUrl(user._id.toHexString());
 
@@ -191,12 +192,28 @@ export class UserController implements IController {
 
   public getRoles = async (req:PublicRequest, res:Response, next:NextFunction) => {
     try {
-      const result = await this._roleService.find({}, {})
+      const result = await this._roleService.find({}, {}, {lean:true})
       const roleDto:RoleDto[] = result as RoleDto[]
 
       res.status(200).json({
         status: "success",
         data: roleDto 
+      })
+    } catch (error) {
+      res.status(400).json({
+        status: "error"
+      })
+    }
+  }
+
+  public getAcls = async (req:PublicRequest, res:Response, next:NextFunction) => {
+    try {
+      const result = await this._aclService.find({}, {}, {lean:true , populate:{path:"aclSchema.role", match:true, model: RoleModel}})
+      const aclDto:AclDto[] = result as AclDto[]
+
+      res.status(200).json({
+        status: "success",
+        data: aclDto 
       })
     } catch (error) {
       res.status(400).json({

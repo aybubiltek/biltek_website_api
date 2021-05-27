@@ -1,14 +1,5 @@
-
 import express from "express";
-import { AuthRequest } from "../@types";
-import { logIn, logOut } from "../auth";
-import { BadRequest } from "../errors/http-errors";
-import { UserDto } from "../lib/user/user.dto";
-import UserModel, { User } from "../lib/user/user.model";
-import { UserRepository } from "../lib/user/user.repository";
 import { UserRoute } from "../lib/user/user.route";
-import { checkIsLoggedIn, guest } from "../middleware/auth.middleware";
-import { validationMiddleware } from "../middleware/validaton.middleware";
 
 export class ApiRoute {
   protected route: express.Router;
