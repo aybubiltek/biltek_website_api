@@ -1,8 +1,9 @@
-import { getModelForClass,pre, modelOptions, prop, DocumentType } from "@typegoose/typegoose";
+import { getModelForClass,pre, modelOptions, prop, DocumentType, Ref } from "@typegoose/typegoose";
 import { compare, hash } from "bcryptjs";
 import { createHash, createHmac, timingSafeEqual } from "crypto";
 import { APP_SECRET, BCRYPT_WORK_FACTOR, EMAIL_VERIFICATION_TIMEOUT, PORT } from '../../config';
 import { Types } from "mongoose";
+import { Role } from '../acl/role-manager/role.model';
 
 
 
@@ -25,6 +26,9 @@ export class User{
 
     @prop({type: () => String, required:true})
     public password:string
+
+    @prop({ref: Role})
+    public roleId:Ref<Role>
 
     @prop({type: () => Date, required:false})
     public verifiedDate:Date

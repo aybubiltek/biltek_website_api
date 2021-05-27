@@ -33,15 +33,27 @@ export class UserRoute {
     );
 
     this._userController.router.post(
-        "/register",
-        guest(),
-        this._userController.register
-      );
+      "/register",
+      guest(),
+      this._userController.register
+    );
 
     this._userController.router.post(
-        "/logout",
-        checkIsLoggedIn(),
-        this._userController.logout
+      "/logout",
+      checkIsLoggedIn(),
+      this._userController.logout
+    );
+
+    this._userController.router.post(
+      "/role",
+      checkIsLoggedIn(),
+      this._userController.createRole
+    );
+
+    this._userController.router.get(
+      "/role",
+      checkIsLoggedIn(),
+      this._userController.getRoles
     )
 
     return this._userController.router;

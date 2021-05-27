@@ -6,7 +6,7 @@ import { FilterQuery, Document, SaveOptions, UpdateQuery, QueryUpdateOptions, Qu
 
 export class UserService implements IService<UserDto>{
     private _userRepository:UserRepository
-
+    
     constructor(){
         this._userRepository = new UserRepository(UserModel)
     }

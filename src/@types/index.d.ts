@@ -1,7 +1,7 @@
 import session from "express-session";
 import { Request } from "express";
 
-export type SessionWithUser = session & {userId:string, createdDate:number | {}}
+export type SessionWithUser = session & {userId:string, roleId:string ,createdDate:number | {}}
 
 /*declare module session {
     export interface SessionData {
