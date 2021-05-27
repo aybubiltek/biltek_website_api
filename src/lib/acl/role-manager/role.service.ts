@@ -9,6 +9,7 @@ import { IService } from "../../../interfaces/IService";
 import { RoleDto } from "./role.dto";
 import RoleModel, { Role } from "./role.model";
 import { RoleRepository } from "./role.repository";
+import { QueryFindOptions } from 'mongoose';
 
 export class RoleService implements IService<RoleDto> {
   private _roleRepository: RoleRepository;
@@ -19,11 +20,10 @@ export class RoleService implements IService<RoleDto> {
 
   public async find(
     filter: FilterQuery<RoleDto>,
-    projection: any
+    projection: any,
+    options: QueryFindOptions
   ): Promise<RoleDto[]> {
-    const result = await this._roleRepository.find(filter, projection, {
-      lean: true,
-    });
+    const result = await this._roleRepository.find(filter, projection,options);
     return (result as unknown) as RoleDto[];
   }
 

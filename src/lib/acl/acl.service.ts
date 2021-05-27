@@ -1,8 +1,9 @@
-import { FilterQuery, SaveOptions, UpdateQuery, QueryUpdateOptions, QueryFindBaseOptions } from 'mongoose';
+import { FilterQuery, SaveOptions, UpdateQuery, QueryUpdateOptions, QueryFindBaseOptions, QueryFindOptions } from 'mongoose';
 import { IService } from '../../interfaces/IService';
 import { AclDto } from './acl.dto';
 import AclModel from './acl.model';
 import { AclRepository } from './acl.repository';
+import RoleModel from './role-manager/role.model';
 
 export class AclService implements IService<AclDto>{
     private _aclRepository:AclRepository;
@@ -17,8 +18,8 @@ export class AclService implements IService<AclDto>{
         return result as unknown as AclDto
     }
 
-    public async find(filter: FilterQuery<AclDto>, projection: any): Promise<AclDto[]> {
-        const result = await this._aclRepository.find(filter,projection, {lean:true})
+    public async find(filter: FilterQuery<AclDto>, projection: any, options: QueryFindOptions): Promise<AclDto[]> {
+        const result = await this._aclRepository.find(filter,projection,options)
         return result as unknown as AclDto[];
     }
 
