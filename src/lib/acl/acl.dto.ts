@@ -2,15 +2,18 @@ import { Allow, IsBoolean, IsDate, IsEmail, IsMongoId, IsOptional, IsString, Val
 import { IModel } from "../../model/base.model";
 import mongoose from 'mongoose';
 import { RoleDto } from "./role-manager/role.dto";
-import { Methods } from "./acl.model";
 
 
-class AclSchemaDto implements IModel{
+export class AclSchemaDto implements IModel{
     @ValidateNested()
     role:RoleDto
 
+    /**
+     * ! Verileri okurken oluşan hata nedeniyle Map sınıfını kullanmak yerine
+     * ! typescript bize sunduğu dictionary yapısına geçiş yapıldı
+     */
     @Allow()
-    permission:Map<Methods,boolean>
+    permission:{[key:string]:boolean} = {}
 }
 
 export class AclDto implements IModel{
