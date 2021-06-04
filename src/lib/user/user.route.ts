@@ -3,17 +3,24 @@ import { Router } from "express";
 import { validationMiddleware } from "../../middleware/validation.middleware";
 import { UserDto } from "./user.dto";
 import { checkIsLoggedIn, guest } from "../../middleware/auth.middleware";
+import IRoute from "../../interfaces/IRoute";
+import { checkAcl } from '../../middleware/acl.middleware';
 
-export class UserRoute {
+export class UserRoute implements IRoute {
   private _userController: UserController;
+
+  moduleName: string;
 
   constructor() {
     this._userController = new UserController();
+    this.moduleName = "user";
   }
 
   public UserRoutes = (): Router => {
     this._userController.router.post(
       "/",
+      checkIsLoggedIn(),
+      checkAcl(),
       validationMiddleware(UserDto, {
         validator: { skipMissingProperties: true, stopAtFirstError: false },
       }),
@@ -23,6 +30,7 @@ export class UserRoute {
     this._userController.router.get(
       "/",
       checkIsLoggedIn(),
+      checkAcl(),
       this._userController.getUser
     );
 
@@ -47,19 +55,29 @@ export class UserRoute {
     this._userController.router.post(
       "/role",
       checkIsLoggedIn(),
+      checkAcl(),
       this._userController.createRole
     );
 
     this._userController.router.get(
       "/role",
       checkIsLoggedIn(),
+      checkAcl(),
       this._userController.getRoles
-    )
+    );
 
     this._userController.router.get(
       "/acl",
       checkIsLoggedIn(),
+      checkAcl(),
       this._userController.getAcls
+    );
+
+    this._userController.router.put(
+      "/acl",
+      checkIsLoggedIn(),
+      checkAcl(),
+      this._userController.addRoleToAcl
     )
 
     return this._userController.router;

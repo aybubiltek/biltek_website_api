@@ -161,28 +161,24 @@ export class UserController implements IController {
     res: Response,
     next: NextFunction
   ) => {
-    const mongoose_session = mongoose.startSession();
+    /**
+     * ! Request object should be:
+     * {
+     *    "roleName": <role name value>
+     *    "isActive": <true or false>
+     * }
+     * 
+     */
     try {
-      (await mongoose_session).startTransaction();
       let roleDto: RoleDto = new RoleDto();
-      roleDto = req.body.role as RoleDto;
-
-      const newRole = await this._roleService.create(roleDto, {session:await mongoose_session});
+      roleDto = req.body as RoleDto;
+      const result = await this._roleService.create(roleDto,{});
       
-      let aclDto:AclDto = new AclDto();
-      aclDto = req.body.acl as AclDto;
-      aclDto.aclSchema.forEach(x=>{x.role = newRole});
-      await this._aclService.create(aclDto, {session:await mongoose_session});
-
-      await (await mongoose_session).commitTransaction();
-      (await mongoose_session).endSession();
-
       res.status(201).json({
-        status:"success"
+        status:"success",
+        data: result
       })
     } catch (error) {
-       (await mongoose_session).abortTransaction();
-       (await mongoose_session).endSession();
        res.status(400).json({
          status:"error",
          data:error
@@ -218,6 +214,48 @@ export class UserController implements IController {
     } catch (error) {
       res.status(400).json({
         status: "error"
+      })
+    }
+  }
+
+  public addRoleToAcl = async (req:AuthRequest, res:Response, next:NextFunction) => {
+    /**
+     * Request data schema:
+     * {
+     *    aclId: <aclId>
+     *    roleId: "<roleId value>"
+     *    permissions:{
+     *      GET: true or false
+     *      POST: true or false
+     *      PUT: true or false
+     *      DELETE: true or false
+     *    }
+     * }
+     */
+    const mongoose_session = mongoose.startSession();
+    try {
+      (await mongoose_session).startTransaction();
+      const checkAcl = await this._aclService.findOne({$and:[{_id: req.body.aclId},{'aclSchema.role':req.body.roleId}]}, {}, {lean:true, session:await mongoose_session});
+      let result;
+      if (checkAcl == null) {
+        result = await this._aclService.update({_id: req.body.aclId},{$addToSet:{aclSchema:{role:req.body.roleId,permission:req.body.permissions}}}, {session:await mongoose_session});
+      } else {
+        result = await this._aclService.update({$and:[{_id: req.body.aclId},{'aclSchema.role':req.body.roleId}]},{$set:{'aclSchema.$':{'permission':req.body.permissions,'role':req.body.roleId}}}, {session:await mongoose_session});
+      }
+      
+
+      await (await mongoose_session).commitTransaction();
+      (await mongoose_session).endSession();
+      res.status(201).json({
+        status: "success",
+        data: result
+      })
+    } catch (error) {
+      (await mongoose_session).abortTransaction();
+      (await mongoose_session).endSession();
+      res.status(400).json({
+        status:"error",
+        data:error
       })
     }
   }
