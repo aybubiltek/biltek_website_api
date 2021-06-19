@@ -27,7 +27,7 @@ export class CtfController implements IController{
         
         <br><br>Yarışmaya özel discord sunucumuza katılarak, duyurulardan haberdar olabilir ve aklındaki soru işaretlerini giderebilirsin. Discord sunucumuza katılmak için <a href='https://discord.gg/PghrethC'>tıklayınız</a>.<br> 
          
-        <br><br>Break The Gleipnir ‘da görüşünceye dek bize ulaşabileceğin sosyal medya hesaplarımıza ulaşmak için <a href='https://linktr.ee/biltek'>tıklayınız</a><br><br>
+        <br><br>Break The Gleipnir ‘da görüşünceye dek bize ulaşabileceğin sosyal medya hesaplarımız için <a href='https://linktr.ee/biltek'>tıklayınız</a><br><br>
         
         <b>3 Temmuz'da</b> görüşmek üzere !<br><br>`
     }
@@ -61,7 +61,8 @@ export class CtfController implements IController{
                 
                 const team = await this._teamService.create(memberDto.team as CtfTeamDto,{session:await mongoose_session})
                 memberDto.team = team
-                this._mailText  += `Takım kodun:<b>${team.team_code}</b><br> Bu kod ile ekibini genişletebilir ve  ekip arkadaşlarını ekibine dahil edebilirsin `
+                let edited_text = this._mailText
+                edited_text += `Takım kodun:<b>${team.team_code}</b><br> Bu kod ile ekibini genişletebilir ve  ekip arkadaşlarını ekibine dahil edebilirsin `
                 const member = await this._memberService.create(memberDto, {session:await mongoose_session})
 
                 await (await mongoose_session).commitTransaction();
@@ -71,7 +72,7 @@ export class CtfController implements IController{
                     data:member
                 })*/
                 req.body.team_code = member.team.team_code
-                req.body.mail_text = this._mailText;
+                req.body.mail_text = edited_text;
                 next()
             }
             
@@ -115,17 +116,28 @@ export class CtfController implements IController{
                     let memberDto:CtfMemberDto = new CtfMemberDto()
                     memberDto = req.body as CtfMemberDto
                     memberDto.team = teamDto
-                    const member = await this._memberService.create(memberDto, {session:await mongoose_session})
+                    if(teamDto.total_member != 4){
+                        teamDto.total_member++;
+                        await this._teamService.update({team_code:teamDto.team_code},{total_member:teamDto.total_member},{session:await mongoose_session})
+                        const member = await this._memberService.create(memberDto, {session:await mongoose_session})
     
-                    await (await mongoose_session).commitTransaction();
-                    (await mongoose_session).endSession();
-                    /*res.status(201).json({
-                        status:"success",
-                        data:member
-                    })*/
-                    req.body.email = req.body.email
-                    req.body.mail_text = this._mailText
-                    next()
+                        await (await mongoose_session).commitTransaction();
+                        (await mongoose_session).endSession();
+                        /*res.status(201).json({
+                            status:"success",
+                            data:member
+                        })*/
+                        req.body.email = req.body.email
+                        req.body.mail_text = this._mailText
+                        next()
+                    } else {
+                        res.status(400).json({
+                            status:"error",
+                            message:"Takımımız maximum kişi sayısına ulaşmıştır. Bir takım en fazla 4 kişi olabilir."
+                        })
+                    }
+                   
+                   
                 }
             }
             else{

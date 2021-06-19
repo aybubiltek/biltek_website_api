@@ -1,5 +1,5 @@
 import { mongoose } from '@typegoose/typegoose';
-import { IsDate, IsMongoId, IsNotEmpty, IsOptional, IsString, MinLength, ValidateIf } from 'class-validator';
+import { IsDate, IsMongoId, IsNotEmpty, IsNumber, IsOptional, IsString, Max, Min, MinLength, ValidateIf } from 'class-validator';
 import { IModel } from '../../../model/base.model';
 
 export class CtfTeamDto implements IModel{
@@ -17,6 +17,12 @@ export class CtfTeamDto implements IModel{
     @IsNotEmpty()
     @IsString()
     team_code:string
+
+    @IsOptional()
+    @IsNumber()
+    @Min(1)
+    @Max(4)
+    total_member:number
 
     @IsDate()
     @IsOptional()

@@ -19,7 +19,8 @@ export class CtfTeam{
     @prop({type: () => String})
     public team_code: string
 
-    
+    @prop({type: () => Number, required:true, default:1, max:4, min:1})
+    public total_member:number
 }
 
 const TeamModel = getModelForClass<typeof CtfTeam>(CtfTeam, {options: {customName: 'ctfteams'}})
