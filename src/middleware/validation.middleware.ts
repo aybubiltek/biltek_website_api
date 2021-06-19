@@ -6,18 +6,19 @@ export const validationMiddleware = (model:any, options?:TransformValidationOpti
         let errors = []
         try {
             const userObject = await transformAndValidate(model, req.body, options)
-            console.log(userObject)
+            console.info("validation success")
         } catch (error) {
             // Buraya validationları işleyecek bir fonksiyon gelecek
             errors = error
-            console.log(error)
+            console.error("validation error")
           
         }
 
         if (errors.length) {
+            // !daha sonra buradaki validation işlemeleri daha düzgün yapılmalıdır
             res.status(422).json({
                 "status": "failed",
-                "error": errors
+                "message":"Eksik veya hatalı veri girdiniz, lütfen kontrol edip tekrar deneyiniz"
             })
         }
         else {

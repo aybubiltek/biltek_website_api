@@ -1,4 +1,4 @@
-import { Allow, IsBoolean, IsDate, IsEmail, IsEmpty, IsNotEmpty, IsOptional, IsString, MinLength, ValidateNested } from "class-validator";
+import { Allow, IsBoolean, IsDate, IsEmail, IsEmpty, IsNotEmpty, IsOptional, IsString, MinLength, ValidateNested, ValidateIf } from 'class-validator';
 import { CtfTeamDto } from '../team/ctf.team.dto';
 import { IModel } from '../../../model/base.model';
 import { Type } from "class-transformer";
@@ -17,8 +17,9 @@ export class CtfMemberDto implements IModel{
     name_surname:string
 
     @IsBoolean()
-    isJoinWebinar:boolean
+    isJoinCtf:boolean
 
+    @ValidateIf(member => member.isJoinCtf === true)
     @ValidateNested()
     @Type(()=>CtfTeamDto)
     team:CtfTeamDto

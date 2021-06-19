@@ -5,17 +5,17 @@ export const sendSingleMail = (from:string, subject:string, text:string) => {
     return async (req: PublicRequest, res: Response, next: NextFunction) => {
       const mail:Mailgun = new Mailgun()
       try {
-          const result = await mail.sendSingleMail(from, req.body.email, subject, text)
-          console.log(result)
+          const result = await mail.sendSingleMail(from, req.body.email, subject, req.body.mail_text)
+          console.info(result)
           res.status(201).json({
               status:"success",
-              data:result
+              message:"Kaydınız başarılı bir şekilde  gerçekleşmiştir."
           })
       } catch (error) {
-          console.log(error)
+          console.error(error)
           res.status(400).json({
             status:"error",
-            data:error
+            "message": ""
         });
       }
     };

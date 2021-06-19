@@ -1,4 +1,4 @@
-import { getModelForClass,pre, modelOptions, prop} from "@typegoose/typegoose";
+import { getModelForClass,pre, modelOptions, prop, index} from "@typegoose/typegoose";
 import { nolookalikesSafe } from "nanoid-dictionary";
 import { customAlphabet } from "nanoid/async";
 
@@ -8,6 +8,7 @@ import { customAlphabet } from "nanoid/async";
 })
 
 @modelOptions({schemaOptions: {collection: "ctfteams", timestamps: true, toJSON:{virtuals:true}, toObject:{virtuals:true}}})
+@index({team_code:1}, {unique:true})
 export class CtfTeam{
     /*@prop()
     public _id: Types.ObjectId*/

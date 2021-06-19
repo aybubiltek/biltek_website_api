@@ -17,12 +17,15 @@ export class CtfRoute implements IRoute{
 
     public CtfRoutes = ():Router => {
         this._ctfController.router.post("/team",validationMiddleware(CtfMemberDto, {
-            validator: {stopAtFirstError:false, validationError:{target:false, value:false}}
+            validator: {stopAtFirstError:false, validationError:{target:false, value:false}},transformer:{enableImplicitConversion:true}
         }), this._ctfController.createTeam, sendSingleMail("Break The Gleipnir <btg@aybubiltek.com>", "Hoşgeldiniz", "deneme"))
 
         this._ctfController.router.put("/team", validationMiddleware(CtfMemberDto ,{
-            validator: { stopAtFirstError:false, validationError:{target:false, value:false}}}), this._ctfController.addMemberToTeam, sendSingleMail("Break The Gleipnir <btg@aybubiltek.com>", "Hoşgeldiniz", "deneme"))
+            validator: { stopAtFirstError:false, validationError:{target:false, value:false}}, transformer:{enableImplicitConversion:true}}), this._ctfController.addMemberToTeam, sendSingleMail("Break The Gleipnir <btg@aybubiltek.com>", "Hoşgeldiniz", "deneme"))
 
+        this._ctfController.router.post("/member", validationMiddleware(CtfMemberDto ,{
+            validator: { stopAtFirstError:false, validationError:{target:false, value:false}}, transformer:{enableImplicitConversion:true}}),this._ctfController.addMember ,sendSingleMail("Break The Gleipnir <btg@aybubiltek.com>", "Hoşgeldiniz", "deneme"))
+            
         return this._ctfController.router;
     }
 

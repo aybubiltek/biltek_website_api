@@ -7,7 +7,8 @@ dotenv.config();
 export const environment = process.env.NODE_ENV;
 export const PORT = process.env.PORT;
 
-export const MONGODB_URI: string = process.env.mongoURIString || "";
+export const MONGODB_URI_DEVEL: string = process.env.mongoURIStringDevel || "";
+export const MONGODB_URI_PROD: string = process.env.mongoURIStringProd || "";
 
 export const HOST = process.env.HOST;
 

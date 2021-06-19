@@ -1,12 +1,12 @@
 import mongoose, { Connection, ConnectionOptions } from "mongoose";
-import { MONGODB_URI } from "../config";
+import { MONGODB_URI_DEVEL, MONGODB_URI_PROD } from "../config";
 import { IConnection } from './IConnection';
-import mongo from 'mongoose';
 
 class MongoConnection implements IConnection {
+    private uri:string = process.env.NODE_ENV == "production" ? MONGODB_URI_PROD : MONGODB_URI_DEVEL
     disconnection(): void {
         mongoose.connection.close(() => {
-            console.log("Mongoose default connection is disconnected");
+            console.info("Mongoose default connection is disconnected");
         })
     }
     public connection(): void {
@@ -29,7 +29,7 @@ class MongoConnection implements IConnection {
             keepAlive: true,
             keepAliveInitialDelay: 300000
         }
-        mongoose.connect(MONGODB_URI, options)
+        mongoose.connect(this.uri, options)
 
         mongoose.connection.on("error", (err) => {
             console.error("Failed to Connect MongoDb")

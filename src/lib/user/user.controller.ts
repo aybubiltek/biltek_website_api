@@ -125,8 +125,6 @@ export class UserController implements IController {
 
       const link = user.verificationUrl(user._id.toHexString());
 
-      console.log(link);
-
       res.status(200).json({
         status: "success",
         data: user,

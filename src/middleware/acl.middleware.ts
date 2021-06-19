@@ -14,11 +14,9 @@ const aclService:AclService = new AclService();
 export const checkAcl =  () => {
     return async (req: AuthRequest, res: Response, next: NextFunction) => {
         const acls:AclDto[] = await getAcls() as unknown as AclDto[]
-        console.log(req.baseUrl.split('/'))
         const moduleAcl = acls.find(x=>x.moduleName == req.baseUrl.split('/')[1])
         if (moduleAcl){
             const roleAcl = moduleAcl.aclSchema.find(x=>x.role._id == req.session.roleId) as AclSchemaDto
-            console.log(roleAcl.permission[Methods.GET])
 
             if(roleAcl && roleAcl.permission[req.method] === true){
                return next()

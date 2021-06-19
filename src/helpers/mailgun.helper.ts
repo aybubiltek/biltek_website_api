@@ -10,7 +10,7 @@ export class Mailgun{
 
     public sendSingleMail = async (from:string, to:string, subject:string, text: string):Promise<any> => {
         try {
-            const result = await this.mg.messages().send({from:from,to:to, subject:subject, text:text})
+            const result = await this.mg.messages().send({from:from,to:to, subject:subject, html:text})
 
             return result
         } catch (error) {

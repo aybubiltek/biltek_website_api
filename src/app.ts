@@ -17,7 +17,7 @@ class Api {
         this.sessionSetup(this.redisSetup());
         this.routeConfig();
         this.mongoSetup();
-       
+        console.info(process.env.NODE_ENV);
     }
 
     private config = () => {
