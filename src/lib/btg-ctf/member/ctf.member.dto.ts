@@ -1,7 +1,9 @@
-import { IsBoolean, IsDate, IsEmail, IsNotEmpty, IsString, MinLength, ValidateNested } from "class-validator";
+import { Allow, IsBoolean, IsDate, IsEmail, IsEmpty, IsNotEmpty, IsOptional, IsString, MinLength, ValidateNested } from "class-validator";
 import { CtfTeamDto } from '../team/ctf.team.dto';
+import { IModel } from '../../../model/base.model';
+import { Type } from "class-transformer";
 
-export class CtfMemberDto{
+export class CtfMemberDto implements IModel{
     @IsNotEmpty()
     @IsString()
     @IsEmail(undefined, {
@@ -18,12 +20,15 @@ export class CtfMemberDto{
     isJoinWebinar:boolean
 
     @ValidateNested()
+    @Type(()=>CtfTeamDto)
     team:CtfTeamDto
 
     @IsDate()
+    @IsOptional()
     createdAt?: Date
     
     @IsDate()
+    @IsOptional()
     updatedAt?: Date
 
 }

@@ -28,6 +28,7 @@
     "@types/express-session": "^1.17.3",
     "@types/helmet": "^4.0.0",
     "@types/ioredis": "^4.26.1",
+    "@types/mailgun-js": "^0.22.11",
     "@types/mongoose": "^5.10.5",
     "@types/nanoid": "^3.0.0",
     "@types/nanoid-dictionary": "^4.2.0",
@@ -46,6 +47,7 @@
     "express-session": "^1.17.1",
     "helmet": "^4.5.0",
     "ioredis": "^4.27.2",
+    "mailgun-js": "^0.22.0",
     "nanoid": "^3.1.23",
     "nanoid-dictionary": "^4.3.0"
   }

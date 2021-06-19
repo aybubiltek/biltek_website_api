@@ -75,3 +75,13 @@ export const EMAIL_VERIFICATION_TIMEOUT:number = SIX_HOURS
 
 // Password Reset
 export const PASSWORD_RESET_TIMEOUT = ONE_HOUR
+
+
+/**Mailgun Setup */
+export const MAILGUN_SETTINGS = {
+  API_KEY:process.env.MAILGUN_API_KEY,
+  HOST:process.env.MAILGUN_HOST,
+  DOMAIN:process.env.MAILGUN_DOMAIN
+}
+
+/**Mailgun Setup */
