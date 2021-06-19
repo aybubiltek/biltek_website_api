@@ -25,10 +25,10 @@ export class CtfController implements IController{
         
         <br><br>Yarışma süresince eğlence, bilgi ve rekabetin yanında bayrakları toplayarak sürpriz çekilişleri ve büyük ödülleri kazanmak istiyorsan <b>3  Temmuz</b>’da ekibinle veya bireysel olarak hazır olmayı unutma !
         
-        <br><br>Yarışmaya özel <a href='https://discord.gg/PghrethC'>Discord Sunucumuza</a> katılarak, duyurulardan haberdar olabilir ve aklındaki soru işaretlerini giderebilirsin<br> 
+        <br><br>Yarışmaya özel discord sunucumuza katılarak, duyurulardan haberdar olabilir ve aklındaki soru işaretlerini giderebilirsin. Discord sunucumuza katılmak için <a href='https://discord.gg/PghrethC'>tıklayınız</a>.<br> 
          
-        <br><br>Break The Gleipnir ‘da görüşünceye dek bize ulaşabileceğin sosyal medya hesaplarımız ;<br><br>
-         
+        <br><br>Break The Gleipnir ‘da görüşünceye dek bize ulaşabileceğin sosyal medya hesaplarımıza ulaşmak için <a href='https://linktr.ee/biltek'>tıklayınız</a><br><br>
+        
         <b>3 Temmuz'da</b> görüşmek üzere !<br><br>`
     }
 
@@ -61,7 +61,7 @@ export class CtfController implements IController{
                 
                 const team = await this._teamService.create(memberDto.team as CtfTeamDto,{session:await mongoose_session})
                 memberDto.team = team
-                this._mailText  += `Takım arkadaşlarınızı ekleyebileceğiniz takım kodunuz: <b>${team.team_code}</b>`
+                this._mailText  += `Takım kodun:<b>${team.team_code}</b><br> Bu kod ile ekibini genişletebilir ve  ekip arkadaşlarını ekibine dahil edebilirsin `
                 const member = await this._memberService.create(memberDto, {session:await mongoose_session})
 
                 await (await mongoose_session).commitTransaction();
