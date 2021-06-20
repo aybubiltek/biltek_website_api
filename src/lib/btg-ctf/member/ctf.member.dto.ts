@@ -1,4 +1,4 @@
-import { Allow, IsBoolean, IsDate, IsEmail, IsEmpty, IsNotEmpty, IsOptional, IsString, MinLength, ValidateNested, ValidateIf } from 'class-validator';
+import { Allow, IsBoolean, IsDate, IsEmail, IsEmpty, IsNotEmpty, IsOptional, IsString, MinLength, ValidateNested, ValidateIf, IsAlpha, Matches } from 'class-validator';
 import { CtfTeamDto } from '../team/ctf.team.dto';
 import { IModel } from '../../../model/base.model';
 import { Type } from "class-transformer";
@@ -11,6 +11,7 @@ export class CtfMemberDto implements IModel{
     })
     email: string;
 
+    @Matches("^[a-zA-Z ]+$")
     @IsNotEmpty()
     @IsString()
     @MinLength(5, {message:"It should be a real name"})
