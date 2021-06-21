@@ -11,7 +11,7 @@ export class CtfMemberDto implements IModel{
     })
     email: string;
 
-    @Matches("^[a-zA-ZiİşŞğĞüÜöÖçÇ ]+$")
+    @Matches("^[a-zA-ZiıİşŞğĞüÜöÖçÇ ]+$")
     @IsNotEmpty()
     @IsString()
     @MinLength(5, {message:"It should be a real name"})
