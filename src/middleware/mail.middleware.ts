@@ -9,7 +9,7 @@ export const sendSingleMail = (from:string, subject:string, text:string) => {
           console.info(result)
           res.status(201).json({
               status:"success",
-              message:"Kaydınız başarılı bir şekilde  gerçekleşmiştir. Şuanda mail sunucumuz da bulunan bir sorun nedeniyle takım kodlarınız yarın sabah saat 9'dan sonra gönderilecektir. Mail kutunuzu kontrol etmeyi unutmayın."
+              message:"Kaydınız başarılı bir şekilde  gerçekleşmiştir."
           })
       } catch (error) {
           console.error(error)
