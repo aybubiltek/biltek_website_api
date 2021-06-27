@@ -25,7 +25,7 @@ export class CtfController implements IController{
         
         <br><br>Yarışma süresince eğlence, bilgi ve rekabetin yanında bayrakları toplayarak sürpriz çekilişleri ve büyük ödülleri kazanmak istiyorsan <b>3  Temmuz</b>’da ekibinle veya bireysel olarak hazır olmayı unutma !
         
-        <br><br>Yarışmaya özel discord sunucumuza katılarak, duyurulardan haberdar olabilir ve aklındaki soru işaretlerini giderebilirsin. Discord sunucumuza katılmak için <a href='https://discord.gg/PghrethC'>tıklayınız</a>.<br> 
+        <br><br>Yarışmaya özel discord sunucumuza katılarak, duyurulardan haberdar olabilir ve aklındaki soru işaretlerini giderebilirsin. Discord sunucumuza katılmak için <a href='https://discord.gg/TCFKpy2nDu'>tıklayınız</a>.<br> 
          
         <br><br>Break The Gleipnir ‘da görüşünceye dek bize ulaşabileceğin sosyal medya hesaplarımız için <a href='https://linktr.ee/biltek'>tıklayınız</a><br><br>
         
