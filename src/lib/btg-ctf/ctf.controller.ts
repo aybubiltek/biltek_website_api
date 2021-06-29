@@ -23,13 +23,13 @@ export class CtfController implements IController{
         
         <br><br>Ankara Yıldırım Beyazıt Üniversitesi <b>Bilim ve Teknoloji Topluluğu</b> tarafından düzenlenen ödüllü Jeopardy / Attack – Defense türündeki siber güvenlik yarışmamız için geri sayım sürüyor. 
         
-        <br><br>Yarışma süresince eğlence, bilgi ve rekabetin yanında bayrakları toplayarak sürpriz çekilişleri ve büyük ödülleri kazanmak istiyorsan <b>3  Temmuz</b>’da ekibinle veya bireysel olarak hazır olmayı unutma !
+        <br><br>Yarışma süresince eğlence, bilgi ve rekabetin yanında bayrakları toplayarak sürpriz çekilişleri ve büyük ödülleri kazanmak istiyorsan <b>7  Ağustos</b>’da ekibinle veya bireysel olarak hazır olmayı unutma !
         
         <br><br>Yarışmaya özel discord sunucumuza katılarak, duyurulardan haberdar olabilir ve aklındaki soru işaretlerini giderebilirsin. Discord sunucumuza katılmak için <a href='https://discord.gg/TCFKpy2nDu'>tıklayınız</a>.<br> 
          
         <br><br>Break The Gleipnir ‘da görüşünceye dek bize ulaşabileceğin sosyal medya hesaplarımız için <a href='https://linktr.ee/biltek'>tıklayınız</a><br><br>
         
-        <b>3 Temmuz'da</b> görüşmek üzere !<br><br>`
+        <b>7 Ağustos'da</b> görüşmek üzere !<br><br>`
     }
 
     public createTeam = async (req:PublicRequest, res:Response, next:NextFunction) => {
