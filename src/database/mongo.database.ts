@@ -14,7 +14,7 @@ class MongoConnection implements IConnection {
 
         const options: ConnectionOptions = {
             compression: {
-                compressors: ["snappy","zlib"]
+                compressors: ["zlib"]
             },
             noDelay: true,
             ha:true,
