@@ -50,7 +50,7 @@ export const SESSION_OPTIONS: SessionOptions = {
   cookie: {
     maxAge: +THIRTY_MINUTES,
     secure: !environment,
-    sameSite: true,
+    sameSite: "lax",
   },
   rolling: true,
   resave: false,

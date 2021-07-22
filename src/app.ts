@@ -1,17 +1,23 @@
-import express, { Application } from "express";
+import express, { Application, Response, Request, NextFunction } from "express";
 import session, {Store} from "express-session";
 import connectRedis, { RedisStore } from "connect-redis";
 import Redis from "ioredis";
+import { randomBytes } from "crypto";
 import { ApiRoute } from './routes/api.route';
 import helmet from "helmet";
+import statusMonitor from "express-status-monitor";
+import status_monitor_conf from "./applications/status-monitor/status-monitor.json";
 import mongo_connection from "./database/mongo.database";
 import { REDIS_OPTIONS, SESSION_OPTIONS } from "./config";
 
 class Api {
     public api: Application
+    private status_monitor:any
 
     constructor(){
+        console.log(status_monitor_conf)
         this.api = express()
+        this.statusMonitorConfig()
         this.securityOptions()
         this.config();
         this.sessionSetup(this.redisSetup());
@@ -26,11 +32,33 @@ class Api {
     }
 
     private routeConfig = () => {
-        this.api.use("/", new ApiRoute().Routes())
+        this.api.use("/", new ApiRoute().Routes(this.status_monitor.pageRoute))
     }
 
     private securityOptions = () => {
-        this.api.use(helmet())
+
+        this.api.use((req, res, next)=>{
+            res.locals.cspNonce = randomBytes(16).toString("hex");
+            next();
+        })
+
+        this.api.use(helmet({
+            contentSecurityPolicy:{
+                useDefaults:true,
+                directives:{
+                    scriptSrc: ["'self'", "*.cloudflare.com", "'unsafe-inline'" ,(req, res) => {
+                        // @ts-ignore
+                        return `nonce-${res.locals.cspNonce}`
+                    }],
+                }
+            },
+            hidePoweredBy:true
+        }))
+    }
+
+    private statusMonitorConfig = () => {
+        this.status_monitor = statusMonitor({...status_monitor_conf})
+        this.api.use(this.status_monitor.middleware)
     }
 
     private mongoSetup = () => {

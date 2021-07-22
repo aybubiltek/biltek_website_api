@@ -1,6 +1,7 @@
 import express from "express";
 import { UserRoute } from "../lib/user/user.route";
 import { CtfRoute } from '../lib/btg-ctf/ctf.route';
+import { randomBytes } from "crypto";
 
 export class ApiRoute {
   protected route: express.Router;
@@ -13,7 +14,7 @@ export class ApiRoute {
     this._ctfRoute = new CtfRoute()
   }
 
-  public Routes = (): express.Router => {
+  public Routes = (status_monitor_route:any): express.Router => {
     this.route.get(
       "/",
       (
@@ -32,6 +33,8 @@ export class ApiRoute {
 
     this.route.use(this._ctfRoute.getPath(), this._ctfRoute.CtfRoutes());
 
+    this.route.use("/status" ,status_monitor_route)
+    
     return this.route;
   };
 }

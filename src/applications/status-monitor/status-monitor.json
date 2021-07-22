@@ -1,0 +1,28 @@
+{
+    "title": "API Status",
+    "path":"",
+    "spans":[
+            {
+                "interval":1,
+                "retention":60
+            },
+            {
+                "interval":5,
+                "retention":60
+            },
+            {
+                "interval":15,
+                "retention":60
+            }
+        ],
+    "chartVisibility":{
+        "cpu":true,
+        "heap":true,
+        "load":true,
+        "mem":true,
+        "responseTime":true,
+        "rps":true,
+        "statusCodes":true
+    },
+    "healthChecks":[]
+}
