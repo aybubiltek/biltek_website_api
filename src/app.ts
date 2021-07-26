@@ -7,6 +7,7 @@ import { ApiRoute } from './routes/api.route';
 import helmet from "helmet";
 import statusMonitor from "express-status-monitor";
 import status_monitor_conf from "./applications/status-monitor/status-monitor.json";
+import rateLimit from "express-rate-limit";
 import mongo_connection from "./database/mongo.database";
 import { REDIS_OPTIONS, SESSION_OPTIONS } from "./config";
 
@@ -29,6 +30,10 @@ class Api {
     private config = () => {
         this.api.use(express.json())
         this.api.use(express.urlencoded({extended: true}))
+        this.api.use(rateLimit({
+            windowMs: 1 * 60 * 1000,
+            max:30
+        }))
     }
 
     private routeConfig = () => {
