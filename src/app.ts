@@ -68,7 +68,7 @@ class Api {
 
     private mongoSetup = async () => {
         await mongo_connection.connection()
-        await this.migration()
+        //await this.migration()
     }
 
     private redisSetup = () => {
