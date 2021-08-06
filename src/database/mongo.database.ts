@@ -9,13 +9,11 @@ class MongoConnection implements IConnection {
             console.info("Mongoose default connection is disconnected");
         })
     }
-    public connection(): void {
+    public async connection(): Promise<void> {
         mongoose.Promise = global.Promise
 
         const options: ConnectionOptions = {
-            compression: {
-                compressors: ["zlib"]
-            },
+
             noDelay: true,
             ha:true,
             useNewUrlParser: true,
@@ -39,7 +37,7 @@ class MongoConnection implements IConnection {
             console.warn("Mongo db disconnected")
         })
 
-        mongoose.connection.on("connected", () => {
+        await mongoose.connection.on("connected", () => {
             console.info("mongo db is connected")
         })
     }

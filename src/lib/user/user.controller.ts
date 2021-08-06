@@ -121,7 +121,7 @@ export class UserController implements IController {
         req.body as UserDto
       )) as unknown as DocumentType<User>;
 
-      logIn(req, user._id.toHexString(), (user.roleId as unknown as string));
+      //logIn(req, user._id.toHexString(), (user.roleId as unknown as string));
 
       const link = user.verificationUrl(user._id.toHexString());
 

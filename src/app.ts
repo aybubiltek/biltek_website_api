@@ -10,13 +10,13 @@ import status_monitor_conf from "./applications/status-monitor/status-monitor.js
 import rateLimit from "express-rate-limit";
 import mongo_connection from "./database/mongo.database";
 import { REDIS_OPTIONS, SESSION_OPTIONS } from "./config";
+import { prepareDatabase } from "./scripts/migration/schools/main";
 
 class Api {
     public api: Application
     private status_monitor:any
 
     constructor(){
-        console.log(status_monitor_conf)
         this.api = express()
         this.statusMonitorConfig()
         this.securityOptions()
@@ -66,8 +66,9 @@ class Api {
         this.api.use(this.status_monitor.middleware)
     }
 
-    private mongoSetup = () => {
-        mongo_connection.connection()
+    private mongoSetup = async () => {
+        await mongo_connection.connection()
+        await this.migration()
     }
 
     private redisSetup = () => {
@@ -78,6 +79,15 @@ class Api {
 
     private sessionSetup = (store:Store) => {
         this.api.use(session({...SESSION_OPTIONS, store}))
+    }
+
+    private migration = async () => {
+        try {
+           const result = await prepareDatabase()
+           console.log(result)
+        } catch (error) {
+            console.info(error)
+        }
     }
 }
 

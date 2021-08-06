@@ -44,9 +44,9 @@ export class CtfController implements IController{
                 "isJoinCtf": false
             }
          */
-        const mongoose_session = mongoose.startSession()
+        //const mongoose_session = mongoose.startSession()
         try {
-            (await mongoose_session).startTransaction()
+            /*(await mongoose_session).startTransaction()
             const checkMember = await this._memberService.findOne({email:req.body.email},{},{lean:true, session:await mongoose_session})
             if (checkMember) {
                 await (await mongoose_session).abortTransaction();
@@ -70,16 +70,19 @@ export class CtfController implements IController{
                 /*res.status(201).json({
                     status:"success",
                     data:member
-                })*/
+                })
                 req.body.team_code = member.team.team_code
                 req.body.mail_text = edited_text;
                 next()
-            }
-            
+            }*/
+            res.status(400).json({
+                status:"success",
+                message:"Ctf kayıtlarımız bitti. İlginiz için teşekkür ederiz"
+            })
 
         } catch (error) {
-            await (await mongoose_session).abortTransaction();
-            (await mongoose_session).endSession();
+            //await (await mongoose_session).abortTransaction();
+            //(await mongoose_session).endSession();
             res.status(400).json({
                 status:"error",
                 message:"Bir hata oluştu, lütfen tekrar deneyiniz"
@@ -99,9 +102,9 @@ export class CtfController implements IController{
          *      }
          * }
          */
-        const mongoose_session = mongoose.startSession()
+        //const mongoose_session = mongoose.startSession()
         try {
-            (await mongoose_session).startTransaction();
+            /*(await mongoose_session).startTransaction();
             let teamDto:CtfTeamDto = await this._teamService.findOne({team_code:req.body.team.team_code},{},{lean:true, session:await mongoose_session})
             if (teamDto){
                 const checkMember = await this._memberService.findOne({email:req.body.email},{},{lean:true, session:await mongoose_session})
@@ -126,7 +129,7 @@ export class CtfController implements IController{
                         /*res.status(201).json({
                             status:"success",
                             data:member
-                        })*/
+                        })
                         req.body.email = req.body.email
                         req.body.mail_text = this._mailText
                         next()
@@ -139,6 +142,7 @@ export class CtfController implements IController{
                    
                    
                 }
+                
             }
             else{
                 await (await mongoose_session).abortTransaction();
@@ -147,7 +151,11 @@ export class CtfController implements IController{
                     status: "error",
                     message: "Yanlış takım kodu girdiniz."
                 })
-            }
+            }*/
+            res.status(400).json({
+                status:"success",
+                message:"Ctf kayıtlarımız bitti. İlginiz için teşekkür ederiz"
+            })
         } catch (error) {
             res.status(400).json({
                 status:"error",

@@ -42,7 +42,8 @@ export class UserRoute implements IRoute {
 
     this._userController.router.post(
       "/register",
-      guest(),
+      checkIsLoggedIn(),
+      checkAcl(),
       this._userController.register
     );
 
