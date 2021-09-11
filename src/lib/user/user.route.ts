@@ -5,6 +5,7 @@ import { UserDto } from "./user.dto";
 import { checkIsLoggedIn, guest } from "../../middleware/auth.middleware";
 import IRoute from "../../interfaces/IRoute";
 import { checkAcl } from '../../middleware/acl.middleware';
+import { users } from "../../applications/acl.module.conf.json";
 
 export class UserRoute implements IRoute {
   private _userController: UserController;
@@ -13,10 +14,10 @@ export class UserRoute implements IRoute {
 
   constructor() {
     this._userController = new UserController();
-    this.moduleName = "user";
+    this.moduleName = users;
   }
 
-  public UserRoutes = (): Router => {
+  public getRoutes():Router{
     this._userController.router.post(
       "/",
       checkIsLoggedIn(),
@@ -42,8 +43,8 @@ export class UserRoute implements IRoute {
 
     this._userController.router.post(
       "/register",
-      checkIsLoggedIn(),
-      checkAcl(),
+      /*checkIsLoggedIn(),
+      checkAcl(),*/
       this._userController.register
     );
 

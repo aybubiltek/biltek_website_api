@@ -13,13 +13,14 @@ import { RoleDto } from '../acl/role-manager/role.dto';
 import { AclDto } from '../acl/acl.dto';
 import { AclService } from '../acl/acl.service';
 import RoleModel from '../acl/role-manager/role.model';
+import { users } from "../../applications/acl.module.conf.json";
 
 export class UserController implements IController {
   private _userService: UserService;
   private _roleService: RoleService;
   private _aclService: AclService
 
-  path = "/user";
+  path = "/" + users;
   router = Router();
 
   constructor() {
@@ -218,7 +219,7 @@ export class UserController implements IController {
 
   public addRoleToAcl = async (req:AuthRequest, res:Response, next:NextFunction) => {
     /**
-     * Request data schema:
+     * Request data schema: 
      * {
      *    aclId: <aclId>
      *    roleId: "<roleId value>"

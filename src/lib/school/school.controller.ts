@@ -2,12 +2,15 @@ import { Response, Router, NextFunction } from 'express';
 import IController from '../../interfaces/IController';
 import { UniversityService } from './university/university.service';
 import { DepartmentService } from './department/deparment.service';
-import { AuthRequest } from '../../@types';
+import { AuthRequest, PublicRequest } from '../../@types';
 import { UniversityDto } from './university/university.dto';
 import { DepartmentDto } from './department/department.dto';
+import { schools } from "../../applications/acl.module.conf.json";
+import { Types } from "mongoose";
+
 
 export class SchoolController implements IController{
-    path = "/school"
+    path = "/" + schools
     router = Router()
 
     private _universityService: UniversityService
@@ -47,6 +50,39 @@ export class SchoolController implements IController{
                 status: "success",
                 data: result
             })
+        } catch (error) {
+            res.status(400).json({
+                status: "error"
+            })
+        }
+    }
+
+    public getUniversities = async (req:PublicRequest, res:Response, next:NextFunction) => {
+        try {
+            const universities = await this._universityService.find({}, {universityName:1}, {lean:true, sort: {universityName:1}})
+
+            res.status(200).json({
+                status: "success",
+                data: universities
+            })
+        } catch (error) {
+            res.status(400).json({
+                status: "error"
+            })
+        }
+    }
+
+    public getDepartmentByUniversity = async (req:PublicRequest, res:Response, next:NextFunction) => {
+        try {
+            /*const universityDto: UniversityDto = new UniversityDto() 
+            universityDto._id.set(()=>{req.params.id})  */
+            const departments = await this._departmentService.find({university: req.params.id as any}, {departmentName:1}, {lean:true, sort:{departmentName: 1}})
+
+            res.status(200).json({
+                status: "success",
+                data: departments
+            })
+
         } catch (error) {
             res.status(400).json({
                 status: "error"

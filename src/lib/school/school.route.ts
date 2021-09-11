@@ -4,7 +4,7 @@ import { checkIsLoggedIn } from '../../middleware/auth.middleware';
 import { checkAcl } from '../../middleware/acl.middleware';
 import { validationMiddleware } from '../../middleware/validation.middleware';
 import { UniversityDto } from './university/university.dto';
-import { DepartmentDto } from './department/department.dto';
+import { schools } from "../../applications/acl.module.conf.json";
 import { Router } from 'express';
 
 export class SchoolRoute implements IRoute{
@@ -14,10 +14,21 @@ export class SchoolRoute implements IRoute{
 
     constructor(){
         this._schoolController = new SchoolController()
-        this.moduleName = "school"
+        this.moduleName = schools
     }
+ 
 
-    public SchoolRoutes = ():Router => {
+    public getRoutes():Router{
+
+        this._schoolController.router.get(
+            "/get/universities",
+            this._schoolController.getUniversities
+        )
+
+        this._schoolController.router.get(
+            "/get/university/:id/departments",
+            this._schoolController.getDepartmentByUniversity
+        )
 
         this._schoolController.router.post(
             "/add/university",

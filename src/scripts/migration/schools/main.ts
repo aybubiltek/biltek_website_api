@@ -14,6 +14,7 @@ const readUniversityExcel = async () => {
         let data: { [key: string]: string[]; }[] = []
         const result = await operation.readXlsx()
         if(result !== undefined){
+            // @ts-ignore
             result.worksheets[0].eachRow((row, rowNumber)=>{
                 let universityName = row.getCell(1).value
                 if (rowNumber != 1) {
@@ -27,6 +28,7 @@ const readUniversityExcel = async () => {
                 }
          
                 //let universityName:string = row.getCell(0).toString()
+                // @ts-ignore
                 row.eachCell({includeEmpty:false},(cell, colNumber)=>{
                     if (colNumber == 2) {
                         if (cell.value) {
