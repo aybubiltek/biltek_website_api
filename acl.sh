@@ -40,7 +40,7 @@ function add_admin_user {
 		role_id=db.roles.findOne({'roleName': 'admin'})._id;
 		check_admin=db.users.find({'roleId': role_id}).count();
 		if (check_admin == 0){
-			db.users.insert({'name_surname': 'Admin', 'email': '${ADMIN_EMAIL}', 'password': '123', 'roleId': role_id}).nInserted;
+			db.users.insert({'name_surname': 'Admin', 'email': '${ADMIN_EMAIL}', 'password': '<>', 'roleId': role_id}).nInserted;
 		};
 	")
 
