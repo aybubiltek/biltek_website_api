@@ -59,6 +59,11 @@ export class MemberShipRoute implements IRoute{
             "/:id",
             this._membershipController.getMemberById
         )
+
+        this._membershipController.router.post(
+            "/participate",
+            this._membershipController.participateEvent
+        )
         
         return this._membershipController.router
     }

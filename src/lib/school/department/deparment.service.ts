@@ -1,5 +1,4 @@
-import { FilterQuery, QueryFindOptions, SaveOptions, UpdateQuery, QueryUpdateOptions, QueryFindBaseOptions } from 'mongoose';
-import { IService, Service } from '../../../interfaces/IService';
+import { Service } from '../../../interfaces/IService';
 import { DepartmentDto } from './department.dto';
 import { DepartmentRepository } from './deparment.repository';
 import DepartmentModel from './deparment.model';

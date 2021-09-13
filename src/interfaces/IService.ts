@@ -1,12 +1,12 @@
 import { IModel } from "../model/base.model";
-import { FilterQuery, SaveOptions, UpdateQuery, QueryUpdateOptions, QueryFindBaseOptions, QueryFindOptions } from 'mongoose';
+import { FilterQuery, SaveOptions, UpdateQuery, QueryOptions } from 'mongoose';
 import { BaseRepository } from '../repository/base/BaseRepository';
 
 export interface IService<T extends IModel>{
-    find(filter:FilterQuery<T>, projection:any, options: QueryFindOptions):Promise<T[]>
+    find(filter:FilterQuery<T>, projection:any, options: QueryOptions):Promise<T[]>
     create(dtoItem:T, options?: SaveOptions):Promise<T>
-    update(filter:FilterQuery<T>, updateQuery:UpdateQuery<T>, options:QueryUpdateOptions):Promise<T>
-    findOne(filter:FilterQuery<T>, projection:any, options:QueryFindBaseOptions):Promise<T>
+    update(filter:FilterQuery<T>, updateQuery:UpdateQuery<T>, options:QueryOptions):Promise<T>
+    findOne(filter:FilterQuery<T>, projection:any, options:QueryOptions):Promise<T>
     delete():void
 }
 
@@ -20,7 +20,7 @@ export abstract class Service<T extends IModel> implements IService<T>{
     }
     
     
-    async find(filter: FilterQuery<T>, projection: any, options: QueryFindOptions): Promise<T[]> {
+    async find(filter: FilterQuery<T>, projection: any, options: QueryOptions): Promise<T[]> {
         const result = await this._repository.find(filter, projection, options)
         return result as unknown as T[]
     }
@@ -30,12 +30,12 @@ export abstract class Service<T extends IModel> implements IService<T>{
         return result as unknown as T
     }
 
-    async update(filter: FilterQuery<T>, updateQuery: UpdateQuery<T>, options: QueryUpdateOptions): Promise<T> {
+    async update(filter: FilterQuery<T>, updateQuery: UpdateQuery<T>, options: QueryOptions): Promise<T> {
         const result = await this._repository.update(filter, updateQuery, options)
         return result as unknown as T
     }
 
-    async findOne(filter: FilterQuery<T>, projection: any, options: QueryFindBaseOptions): Promise<T> {
+    async findOne(filter: FilterQuery<T>, projection: any, options: QueryOptions): Promise<T> {
         const result = await this._repository.findOne(filter, projection, options)
         return result as unknown as T
     }

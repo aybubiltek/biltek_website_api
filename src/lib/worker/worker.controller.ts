@@ -4,6 +4,8 @@ import { workers } from "../../applications/acl.module.conf.json";
 import { NextFunction, Router, Response } from 'express';
 import { AuthRequest } from '../../@types';
 import { WorkerDto } from './worker.dto';
+import CompanyModel from '../company/company.model';
+import TagModel from '../tag/tag.model';
 
 export class WorkerController implements IController {
     private _workerService: WorkerService
@@ -61,7 +63,13 @@ export class WorkerController implements IController {
 
     public getWorkersByCompany = async (req:AuthRequest, res:Response, next:NextFunction) => {
         try {
-            const result = await this._workerService.find({company: req.params.id as any}, {}, {lean:true})
+            const result = await this._workerService.find({company: req.params.id as any}, {createdAt:0, updatedAt:0}, {
+                lean:true,
+                populate:[
+                    {path: "company", match:true, model:CompanyModel},
+                    {path: "title", match: true, model: TagModel}
+                ]
+            })
 
             res.status(200).json({
                 status: "success",
@@ -77,7 +85,13 @@ export class WorkerController implements IController {
 
     public getAllWorker = async (req:AuthRequest, res:Response, next:NextFunction) => {
         try {
-            const workers = await this._workerService.find({}, {}, {lean:true})
+            const workers = await this._workerService.find({}, {createdAt:0, updatedAt:0}, {
+                lean:true,
+                populate:[
+                    {path: "company", match:true, model:CompanyModel},
+                    {path: "title", match: true, model: TagModel}
+                ]
+            })
 
             res.status(200).json({
                 status: "success",
@@ -94,7 +108,13 @@ export class WorkerController implements IController {
 
     public getWorkerById = async (req:AuthRequest, res:Response, next:NextFunction) => {
         try {
-            const worker = await this._workerService.find({_id: req.params.id as any}, {}, {lean:true})
+            const worker = await this._workerService.find({_id: req.params.id as any}, {createdAt:0, updatedAt:0}, {
+                lean:true,
+                populate:[
+                    {path: "company", match:true, model:CompanyModel},
+                    {path: "title", match: true, model: TagModel}
+                ]
+            })
 
             res.status(200).json({
                 status: "success",

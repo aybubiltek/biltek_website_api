@@ -11,6 +11,7 @@ import rateLimit from "express-rate-limit";
 import mongo_connection from "./database/mongo.database";
 import { REDIS_OPTIONS, SESSION_OPTIONS } from "./config";
 import { prepareDatabase } from "./scripts/migration/schools/main";
+import { cpus } from "os";
 
 class Api {
     public api: Application
@@ -24,6 +25,9 @@ class Api {
         this.sessionSetup(this.redisSetup());
         this.routeConfig();
         this.mongoSetup();
+        console.log(process.env.UV_THREADPOOL_SIZE)
+        process.env.UV_THREADPOOL_SIZE = cpus().length as any
+        console.log(process.env.UV_THREADPOOL_SIZE)
         console.info(process.env.NODE_ENV);
     }
 

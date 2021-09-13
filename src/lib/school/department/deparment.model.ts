@@ -8,7 +8,7 @@ import { University } from '../university/university.model';
     toJSON:{virtuals:true}, 
     toObject:{virtuals:true}
 }})
-@index({university: 1})
+//@index({university: 1})
 export class Department{
     
     @prop({type: () => String, required:true, trim:true})

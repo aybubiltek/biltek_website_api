@@ -3,6 +3,7 @@ import { IsBoolean, IsDate, IsMongoId, IsOptional, ValidateNested } from "class-
 import { IModel } from "../../../model/base.model";
 import { MemberShip } from '../membership.model';
 import mongoose from 'mongoose';
+import { EventDto } from '../../event/event.dto';
 
 export class ParticipantDto implements IModel{
 
@@ -15,8 +16,8 @@ export class ParticipantDto implements IModel{
     membership:MemberShip
 
     @ValidateNested()
-    @Type(() => Event)
-    event: Event
+    @Type(() => EventDto)
+    event: EventDto
 
     @IsBoolean()
     isJoin: boolean = false

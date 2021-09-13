@@ -1,6 +1,7 @@
 import { BaseRepository } from "../../repository/base/BaseRepository";
-import { WorkerDto } from "../worker/worker.dto";
+import { CompanyDto } from './company.dto';
+import { Company } from "./company.model";
 
-export class CompanyRepository extends BaseRepository<WorkerDto, Worker>{
+export class CompanyRepository extends BaseRepository<CompanyDto, Company>{
     
 } 

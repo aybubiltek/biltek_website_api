@@ -7,7 +7,7 @@ import { modelOptions, prop, getModelForClass, index } from '@typegoose/typegoos
     toJSON:{virtuals:true}, 
     toObject:{virtuals:true}
 }})
-@index({ universityName:1 }, {})
+//@index({ universityName:1 }, {})
 export class University{
 
     @prop({

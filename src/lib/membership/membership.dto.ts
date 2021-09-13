@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import { IsDate, IsEmail, IsMongoId, IsOptional, IsPhoneNumber, IsString, MinLength, ValidateNested } from 'class-validator';
 import { UniversityDto } from '../school/university/university.dto';
 import { DepartmentDto } from '../school/department/department.dto';
-import { isValidObjectId } from "../../utils/validation.util";
 import { Type } from 'class-transformer';
 
 export class MemberShipDto implements IModel {

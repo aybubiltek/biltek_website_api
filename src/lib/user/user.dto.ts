@@ -2,6 +2,7 @@ import { IsDate, IsEmail, IsMongoId, IsOptional, IsString, MinLength, ValidateNe
 import { IModel } from "../../model/base.model";
 import mongoose from 'mongoose';
 import { RoleDto } from '../acl/role-manager/role.dto';
+import { Type } from "class-transformer";
 
 export class UserDto implements IModel{
     @IsMongoId()
@@ -23,13 +24,18 @@ export class UserDto implements IModel{
     password:string
 
     @ValidateNested()
+   // @Type(() => RoleDto)
     role:RoleDto
 
+    @IsOptional()
+    @IsDate()
     verifiedDate:Date
 
+    @IsOptional()
     @IsDate()
     createdAt?: Date
     
+    @IsOptional()
     @IsDate()
     updatedAt?: Date
 

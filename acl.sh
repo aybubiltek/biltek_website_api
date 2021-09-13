@@ -4,14 +4,14 @@ ADMIN_EMAIL="osmanakol@outlook.com"
 ADMIN_PASSWORD=""
 HOST="localhost"
 PORT=27017
-DB="nodejs-auth"
+DB="devel"
 
 CURRENT_DIRECTORY="$(pwd)" # It has to be on main directory
 
 
 
 function check_admin_role {
-	result=$(mongo --host $HOST --port $PORT --quiet --eval "
+	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username biltek2 --password ugoQWcoGkKjhbVvG --quiet --eval "
 	db=db.getSiblingDB('${DB}');
 	db.roles.find({'roleName': 'admin'}).count();");
 
@@ -20,9 +20,9 @@ function check_admin_role {
 		echo "Admin role found"
 	else
 		echo "Admin role not found"
-		create=$(mongo --host $HOST --port $PORT --quiet --eval "
+		create=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username biltek2 --password ugoQWcoGkKjhbVvG --quiet --eval "
 		db=db.getSiblingDB('${DB}');
-		db.roles.insert({'roleName': 'admin', 'isActive': true}).nInserted;")
+		db.roles.insert({'roleName': 'admin', 'isActive': true}).nInserted;");
 		
 		if [ "$create" -eq 1 ]
 		then
@@ -35,14 +35,14 @@ function check_admin_role {
 }
 
 function add_admin_user {
-	result=$(mongo --host $HOST --port $PORT --quiet --eval "
+	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username biltek2 --password ugoQWcoGkKjhbVvG --quiet --eval "
 		db=db.getSiblingDB('${DB}');
 		role_id=db.roles.findOne({'roleName': 'admin'})._id;
 		check_admin=db.users.find({'roleId': role_id}).count();
 		if (check_admin == 0){
 			db.users.insert({'name_surname': 'Admin', 'email': '${ADMIN_EMAIL}', 'password': '<>', 'roleId': role_id}).nInserted;
 		};
-	")
+	");
 
 	if [ "$result" -eq 1 ]
 	then
@@ -57,7 +57,7 @@ function json_escape {
 
 function add_role_to_acl {
 	echo "adding to access admin role for $1 module"
-	result=$(mongo --host $HOST --port $PORT --quiet --eval "
+	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username biltek2 --password ugoQWcoGkKjhbVvG --quiet --eval "
 		db=db.getSiblingDB('${DB}');
 		role_id=db.roles.findOne({'roleName': 'admin'})._id;
 		admin_id=db.users.find({'roleId': role_id})._id;
@@ -81,11 +81,11 @@ function add_role_to_acl {
 				}, 'roleId': role_id
 			}}})
 		}
-		")
+		");
 }
 
 function get_modules {
- 	modules=($(json_escape "$CURRENT_DIRECTORY/src/lib/acl/acl.module.conf.json" | tr -d '[],'))
+ 	modules=($(json_escape "$CURRENT_DIRECTORY/src/applications/acl.module.conf.json" | tr -d '[],'))
 	
 	for module in "${modules[@]}"
 	do

@@ -1,6 +1,6 @@
 import { IModel } from '../../model/base.model';
 import mongoose from 'mongoose';
-import { IsBoolean, IsDate, IsMongoId, IsOptional, IsString, IsUrl, ValidateNested } from 'class-validator';
+import { IsBoolean, IsDate, IsISO8601, IsMongoId, IsOptional, IsString, IsUrl, ValidateNested } from 'class-validator';
 import { UserDto } from '../user/user.dto';
 import { Type } from 'class-transformer';
 import { WorkerDto } from '../worker/worker.dto';
@@ -14,11 +14,11 @@ export class SpeakerDto implements IModel {
     topic: string
 
     @IsOptional()
-    @IsDate()
+    @IsISO8601()
     startTime:Date
 
     @IsOptional()
-    @IsDate()
+    @IsISO8601()
     finishTime:Date
 }
 
@@ -52,11 +52,11 @@ export class EventDto implements IModel {
     isActive:boolean
 
     @IsOptional()
-    @IsDate()
+    @IsISO8601()
     startDate:Date
 
     @IsOptional()
-    @IsDate()
+    @IsISO8601({strict:true})
     finishDate:Date
 
     @IsOptional()

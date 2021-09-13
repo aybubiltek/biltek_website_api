@@ -5,6 +5,7 @@ import { companies } from "../../applications/acl.module.conf.json";
 import { AuthRequest, PublicRequest } from '../../@types';
 import { NextFunction, Response, Router } from 'express';
 import { CompanyDto } from './company.dto';
+import TagModel from '../tag/tag.model';
 
 
 export class CompanyController implements IController{
@@ -65,7 +66,10 @@ export class CompanyController implements IController{
 
     public getAllCompany = async (req:AuthRequest, res:Response, next:NextFunction) => {
         try {
-            const companies = await this._companyService.find({}, {}, {lean:true})
+            const companies = await this._companyService.find({}, {createdAt:0, updatedAt:0}, {
+                lean:true,
+                populate: {path:"category", match:true, model:TagModel, select:{name:1}}
+            })
 
             res.status(200).json({
                 status: "success",
@@ -81,7 +85,10 @@ export class CompanyController implements IController{
 
     public getCompanyById = async (req:PublicRequest, res:Response, next:NextFunction) => {
         try {
-            const company = await this._companyService.find({_id: req.params.id  as any}, {}, {lean:true})
+            const company = await this._companyService.find({_id: req.params.id  as any}, {createdAt:0, updatedAt:0}, {
+                lean:true,
+                populate: {path:"category", match: true, model: TagModel, select:{name:1}}
+            })
 
             res.status(200).json({
                 status: "success",

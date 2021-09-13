@@ -26,6 +26,13 @@ export class TagRoute implements IRoute {
             this._tagController.getTags
         )
 
+        this._tagController.router.get(
+            "/:id",
+            checkIsLoggedIn(),
+            checkAcl(),
+            this._tagController.getTagById
+        )
+
         this._tagController.router.post(
             "/",
             checkIsLoggedIn(),

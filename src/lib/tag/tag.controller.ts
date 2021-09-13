@@ -68,4 +68,19 @@ export class TagController implements IController {
             })
         }
     }
+
+    public getTagById = async (req:AuthRequest, res:Response, next:NextFunction) => {
+        try {
+            const tag = await this._tagService.findOne({_id:req.params.id as any}, {name:1}, {lean:true})
+
+            res.status(200).json({
+                status: "success",
+                data: tag
+            })
+        } catch (error) {
+            res.status(400).json({
+                status: "error"
+            })
+        }
+    }
 }

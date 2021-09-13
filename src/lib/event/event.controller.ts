@@ -4,6 +4,11 @@ import { events } from "../../applications/acl.module.conf.json";
 import { Response, Router, NextFunction } from 'express';
 import { AuthRequest, PublicRequest } from '../../@types';
 import { EventDto } from './event.dto';
+import { User } from '../user/user.model';
+import UserModel from '../user/user.model';
+import WorkerModel from '../worker/worker.model';
+import CompanyModel from '../company/company.model';
+import TagModel from '../tag/tag.model';
 
 export class EventController implements IController{
     private _eventService:EventService
@@ -37,7 +42,16 @@ export class EventController implements IController{
 
     public getAllEvent = async (req:PublicRequest, res:Response, next:NextFunction) => {
         try {
-            const result = await this._eventService.find({}, {}, {lean:true})
+            const result = await this._eventService.find({}, {createdAt:0, updatedAt:0}, {
+                lean:true,
+                populate: [
+                    {path:"moderator", match: true, model:UserModel},
+                    {path:"speakers.speaker", match:true, model: WorkerModel, select:{createdAt:0, updatedAt:0}, populate:[
+                        {path: "company", match:true, model:CompanyModel, select:{createdAt:0, updatedAt:0}},
+                        {path: "title", match: true, model: TagModel, select:{createdAt:0, updatedAt:0}}
+                    ]}
+                ]
+            })
 
             res.status(200).json({
                 status: "success",
