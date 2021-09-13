@@ -11,7 +11,7 @@ CURRENT_DIRECTORY="$(pwd)" # It has to be on main directory
 
 
 function check_admin_role {
-	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username biltek2 --password ugoQWcoGkKjhbVvG --quiet --eval "
+	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username <> --password <> --quiet --eval "
 	db=db.getSiblingDB('${DB}');
 	db.roles.find({'roleName': 'admin'}).count();");
 
@@ -20,7 +20,7 @@ function check_admin_role {
 		echo "Admin role found"
 	else
 		echo "Admin role not found"
-		create=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username biltek2 --password ugoQWcoGkKjhbVvG --quiet --eval "
+		create=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username <> --password <> --quiet --eval "
 		db=db.getSiblingDB('${DB}');
 		db.roles.insert({'roleName': 'admin', 'isActive': true}).nInserted;");
 		
@@ -35,7 +35,7 @@ function check_admin_role {
 }
 
 function add_admin_user {
-	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username biltek2 --password ugoQWcoGkKjhbVvG --quiet --eval "
+	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username <> --password <> --quiet --eval "
 		db=db.getSiblingDB('${DB}');
 		role_id=db.roles.findOne({'roleName': 'admin'})._id;
 		check_admin=db.users.find({'roleId': role_id}).count();
@@ -57,7 +57,7 @@ function json_escape {
 
 function add_role_to_acl {
 	echo "adding to access admin role for $1 module"
-	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username biltek2 --password ugoQWcoGkKjhbVvG --quiet --eval "
+	result=$(mongosh "mongodb+srv://cluster0.5srlc.mongodb.net" --username <> --password <> --quiet --eval "
 		db=db.getSiblingDB('${DB}');
 		role_id=db.roles.findOne({'roleName': 'admin'})._id;
 		admin_id=db.users.find({'roleId': role_id})._id;
