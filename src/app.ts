@@ -1,6 +1,6 @@
-import express, { Application, Response, Request, NextFunction } from "express";
+import express, { Application} from "express";
 import session, {Store} from "express-session";
-import connectRedis, { RedisStore } from "connect-redis";
+import connectRedis from "connect-redis";
 import Redis from "ioredis";
 import { randomBytes } from "crypto";
 import { ApiRoute } from './routes/api.route';

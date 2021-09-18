@@ -3,7 +3,6 @@ import { CtfController } from './ctf.controller';
 import { Router } from 'express';
 import { validationMiddleware } from '../../middleware/validation.middleware';
 import { CtfMemberDto } from './member/ctf.member.dto';
-import { sendSingleMail } from '../../middleware/mail.middleware';
 
 export class CtfRoute implements IRoute{
     private _ctfController:CtfController
@@ -18,13 +17,13 @@ export class CtfRoute implements IRoute{
     public getRoutes():Router{
         this._ctfController.router.post("/team",validationMiddleware(CtfMemberDto, {
             validator: {stopAtFirstError:false, validationError:{target:false, value:false}},transformer:{enableImplicitConversion:true}
-        }), this._ctfController.createTeam, sendSingleMail("Break The Gleipnir <btg@aybubiltek.com>", "Hoşgeldiniz", "deneme"))
+        }))
 
         this._ctfController.router.put("/team", validationMiddleware(CtfMemberDto ,{
-            validator: { stopAtFirstError:false, validationError:{target:false, value:false}}, transformer:{enableImplicitConversion:true}}), this._ctfController.addMemberToTeam, sendSingleMail("Break The Gleipnir <btg@aybubiltek.com>", "Hoşgeldiniz", "deneme"))
+            validator: { stopAtFirstError:false, validationError:{target:false, value:false}}, transformer:{enableImplicitConversion:true}}), this._ctfController.addMemberToTeam)
 
         this._ctfController.router.post("/member", validationMiddleware(CtfMemberDto ,{
-            validator: { stopAtFirstError:false, validationError:{target:false, value:false}}, transformer:{enableImplicitConversion:true}}),this._ctfController.addMember ,sendSingleMail("Break The Gleipnir <btg@aybubiltek.com>", "Hoşgeldiniz", "deneme"))
+            validator: { stopAtFirstError:false, validationError:{target:false, value:false}}, transformer:{enableImplicitConversion:true}}),this._ctfController.addMember)
             
         return this._ctfController.router;
     }
