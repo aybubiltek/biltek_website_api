@@ -37,7 +37,7 @@ class MongoConnection implements IConnection {
             console.warn("Mongo db disconnected")
         })
 
-        await mongoose.connection.on("connected", () => {
+        mongoose.connection.on("connected", () => {
             console.info("mongo db is connected")
         })
     }

@@ -20,8 +20,8 @@ export class Department{
 
 const DepartmentModel = getModelForClass<typeof Department>(Department, {options: {customName: "departments"}})
 
-DepartmentModel.syncIndexes().then(err => {
+/*DepartmentModel.syncIndexes().then(err => {
     console.log(err)
-})
+})*/
 
 export default DepartmentModel

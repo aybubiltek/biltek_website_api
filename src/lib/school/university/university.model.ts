@@ -20,7 +20,7 @@ export class University{
 } 
 
 const UniversityModel = getModelForClass<typeof University>(University, {options:{customName:"universities"}})
-UniversityModel.syncIndexes().then(err => {
+/*UniversityModel.syncIndexes().then(err => {
     console.log(err)
-})
+})*/
 export default UniversityModel
