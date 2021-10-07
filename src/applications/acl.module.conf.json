@@ -1,0 +1,11 @@
+{
+    "memberships": "membership",
+    "users": "user",
+    "schools": "school",
+    "events": "event",
+    "companies": "company",
+    "workers": "worker",
+    "tags": "tag",
+    "status": "status",
+    "btg-ctfs": "btg-ctf"
+}
