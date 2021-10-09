@@ -7,6 +7,8 @@ import { TagRoute } from "../lib/tag/tag.route";
 import { EventRoute } from '../lib/event/event.route';
 import { CompanyRoute } from '../lib/company/company.route';
 import { WorkerRoute } from "../lib/worker/worker.route";
+import { checkIsLoggedIn } from '../middleware/auth.middleware';
+import { checkAcl } from '../middleware/acl.middleware';
 
 export class ApiRoute {
   protected route: express.Router;
@@ -62,7 +64,12 @@ export class ApiRoute {
 
     this.route.use(this._workerRoute.getPath(), this._workerRoute.getRoutes())
     
-    this.route.use("/status" ,status_monitor_route)
+    this.route.use(
+      "/status",
+      checkIsLoggedIn(),
+      checkAcl(),
+      status_monitor_route
+      )
     
 
     return this.route;

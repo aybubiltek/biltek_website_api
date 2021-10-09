@@ -57,6 +57,8 @@ export class MemberShipRoute implements IRoute{
 
         this._membershipController.router.get(
             "/:id",
+            checkIsLoggedIn(),
+            checkAcl(),
             this._membershipController.getMemberById
         )
 

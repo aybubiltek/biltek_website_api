@@ -43,11 +43,15 @@ export class CompanyRoute implements IRoute{
 
        this._companyController.router.get(
            "/",
+           checkIsLoggedIn(),
+           checkAcl(),
            this._companyController.getAllCompany
        )
 
        this._companyController.router.get(
            "/:id",
+           checkIsLoggedIn(),
+           checkAcl(),
            this._companyController.getCompanyById
        )
 
