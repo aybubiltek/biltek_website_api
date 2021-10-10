@@ -48,7 +48,7 @@ export class MemberShipController implements IController {
                 res.status(201).json({
                     status: "success",
                     //data: result
-                    message:"Kaydınız başarılı bir şekilde gerçekleşti. Aramıza hoşgeldiniz :)"
+                    message:"Kaydınız başarılı bir şekilde gerçekleşti. Aramıza hoşgeldiniz Biltek'li :)"
                 })
             } else {
                 res.status(400).json({
