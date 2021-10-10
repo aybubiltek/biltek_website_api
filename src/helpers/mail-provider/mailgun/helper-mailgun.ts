@@ -1,6 +1,6 @@
 import mailgun, {Mailgun} from "mailgun-js";
 import { MAILGUN_SETTINGS } from '../../../config';
-import { readFile } from "fs/promises";
+import { promises as fsp } from "fs";
 import { compile, precompile } from "handlebars";
 
 export class Mailer {
@@ -137,7 +137,7 @@ export class Mailer {
 
     private renderTemplate = async (template_file:string, data:{} = {}, inline:Array<string> = []) => {
         try {
-            const content = await readFile(this.template_file_path + template_file, {encoding:"utf-8"})
+            const content = await fsp.readFile(this.template_file_path + template_file, {encoding:"utf-8"})
             let temp_inline:Array<string> = []
             if (content && inline.length > 0) {
                 for (const value of inline) {
