@@ -1,6 +1,6 @@
 import { IModel } from '../../model/base.model';
 import mongoose from 'mongoose';
-import { IsDate, IsEmail, IsMongoId, IsOptional, IsPhoneNumber, IsString, MinLength, ValidateNested } from 'class-validator';
+import { IsDate, IsEmail, IsMongoId, IsOptional, IsPhoneNumber, IsString, MinLength, ValidateIf, ValidateNested } from 'class-validator';
 import { UniversityDto } from '../school/university/university.dto';
 import { DepartmentDto } from '../school/department/department.dto';
 import { Type } from 'class-transformer';
@@ -18,6 +18,7 @@ export class MemberShipDto implements IModel {
     @IsString()
     email: string
 
+    @ValidateIf(x=>x.phone_number !== "")
     @IsOptional()
     @IsPhoneNumber('TR')
     phone_number: string
