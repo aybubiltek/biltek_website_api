@@ -1,9 +1,12 @@
 import mailgun, {Mailgun} from "mailgun-js";
 import { MAILGUN_SETTINGS } from '../../../config';
+import { readFile } from "fs/promises";
+import { compile, precompile } from "handlebars";
 
 export class Mailer {
 
     private mg:Mailgun
+    private template_file_path:string="src/helpers/mail-provider/mail-templates/"
 
     constructor(){
         this.mg = new mailgun({
@@ -96,13 +99,14 @@ export class Mailer {
         }
     }
 
-    private sendMessageOneReceiver = async (from_mail:string, visible_from:string ,to_mail:string, subject:string, message_content:string) => {
+    private sendMessageOneReceiver = async (from_mail:string, visible_from:string ,to_mail:string, subject:string, message_content:string, inline:string | string[] = "") => {
         try {
             let data:mailgun.messages.SendData = {
                 from: `${visible_from} <${from_mail}>`,
                 to: to_mail,
                 subject: subject,
                 html: message_content,
+                inline:inline,
                 "o:tracking": true,
                 "o:tracking-clicks": true,
                 "o:tracking-opens": true
@@ -113,13 +117,14 @@ export class Mailer {
         }
     }
     
-    private sendMessageMailList = async (list_name:string, visible_from:string ,from_mail:string, subject:string, message_content:string) => {
+    private sendMessageMailList = async (list_name:string, visible_from:string ,from_mail:string, subject:string, message_content:string, inline:string | string[] = "") => {
         try {
             let data:mailgun.messages.SendData = {
                 from: `${visible_from} <${from_mail}>`,
                 to: `${list_name}@${MAILGUN_SETTINGS.DOMAIN}`,
                 subject: subject,
                 html: message_content,
+                inline: inline,
                 "o:tracking": true,
                 "o:tracking-clicks": true,
                 "o:tracking-opens": true
@@ -130,12 +135,31 @@ export class Mailer {
         }
     }
 
-    public sendMessageWithHtml = async (from_mail:string, visible_from:string ,to_mail:string, subject:string, template_path:string, is_mail_list:boolean = false) => {
+    private renderTemplate = async (template_file:string, data:{} = {}, inline:Array<string> = []) => {
         try {
-            if (is_mail_list){
-                return await this.sendMessageMailList(to_mail, visible_from ,from_mail, subject, "")
+            const content = await readFile(this.template_file_path + template_file, {encoding:"utf-8"})
+            let temp_inline:Array<string> = []
+            if (content && inline.length > 0) {
+                for (const value of inline) {
+                    temp_inline.push(this.template_file_path + "img/" + value)
+                }
             }
-            return await this.sendMessageOneReceiver(from_mail, visible_from, to_mail, subject, "")
+            const template = compile(content)
+            const html = template(data)
+            return {html, temp_inline}
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    public sendMessageWithHtml = async (from_mail:string, visible_from:string ,to_mail:string, subject:string, template_path:string, data:{} = {},  inline:Array<string> = [],
+        is_mail_list:boolean = false) => {
+        try {
+            let {html, temp_inline} = await this.renderTemplate(template_path, data, inline) || {html:"", temp_inline:Array<string>()}
+            if (is_mail_list){
+                return await this.sendMessageMailList(to_mail, visible_from ,from_mail, subject, html, temp_inline)
+            }
+            return await this.sendMessageOneReceiver(from_mail, visible_from, to_mail, subject, html, temp_inline)
         } catch (error) {
             return error
         }

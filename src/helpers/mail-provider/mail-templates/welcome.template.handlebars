@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="x-apple-disable-message-reformatting">
+    <title>BİLTEK</title>
+    <link rel="shortcut icon" href="cid:aybulogo.png" type="image/x-icon">
+    
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body .container {
+            font-weight: normal;
+            border-collapse: collapse;
+            border: 0;
+            margin: auto;
+            padding: 0;
+            color: #555559;
+            background-color: white;
+            font-size: 16px;
+            line-height: 26px;
+            width: 600px;
+        }
+
+        body .container tr .border {
+            border: 1px solid #eeeff0;
+            margin: 0;
+        }
+
+        body .container tr .border table .imageSection {
+            border-bottom: 4px solid #10afcd;
+            padding: 0 20px;
+            height: -webkit-max-content;
+            height: -moz-max-content;
+            height: max-content;
+        }
+
+        body .container tr .border table .imageSection .top-image {
+            width: 50px;
+        }
+
+        body .container tr .border table .side-title {
+            color: #555559;
+            border-collapse: collapse;
+        }
+
+        body .container tr .border table .side-title table tr {
+            font-weight: bold;
+            text-align: center;
+        }
+
+        body .container tr .border table .side-title table tr .headTitle {
+            font-size: 25px;
+            line-height: 30px;
+            padding-top: 10px;
+        }
+
+        body .container tr .border table .side-title table tr .subTitle {
+            padding-top: 5px;
+            font-size: 18px;
+            line-height: 29px;
+        }
+
+        body .container tr .border table .side-title table tr .subTitle #introTitle {
+            font-weight: 600;
+        }
+
+        body .container tr .border table .side-title table tr .bannerArea {
+            font-size: 16px;
+            line-height: 26px;
+        }
+
+        body .container tr .border table .side-title table tr .bannerArea #infoBanner .top-image {
+            width: 560px;
+            height: auto;
+        }
+
+        body .container tr .border table .side-title table tr .bannerArea #infoBanner #registerButton {
+            background-color: #10afcd;
+            border: 10px solid #10afcd;
+            border-radius: 3px;
+            text-decoration: none;
+            outline: 0;
+            color: white;
+        }
+
+        body .container tr .border table .side-title table tr .top-padding {
+            padding: 15px;
+        }
+
+        body .container tr .border table .side-title table tr .text {
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 25px;
+            padding: 0 20px 20px;
+        }
+
+        body .container tr .border table .side-title table tr .text #registerButton {
+            text-align: center;
+        }
+
+        body .container tr .border table .side-title table tr .text #registerButton a {
+            background-color: #10afcd;
+            border: 10px solid #10afcd;
+            border-radius: 3px;
+            text-decoration: none;
+            outline: 0;
+            color: white;
+            font-weight: bold;
+        }
+
+        body .container tr .border table .socialArea {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        body .container tr .border table .socialArea .icon {
+            padding: 0 10px 20px 10px;
+            font-size: 16px;
+            color: #10afcd;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <table class="container" role="presentation">
+        <tr>
+            <td class="border">
+                <table>
+                    <tr>
+                        <td colspan="4" class="imageSection">
+                            <a href="https://www.aybubiltek.com/"><img class="top-image" src="cid:aybulogo.png"
+                                    alt="Bilim ve Teknoloji Kulübü"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="side-title">
+                            <table>
+                                <tr>
+                                    <td class="headTitle">
+                                        <div id="mainTitle">
+                                            Bilim ve Teknoloji Kulübü
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+                                <tr>
+                                    <td class="bannerArea">
+                                        <div id="infoBanner">
+                                            <img class="top-image" src="cid:welcome.image.png" /><br><br>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="top-padding">
+                                        <hr size="1" color="#eeeff0">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text">
+                                        <div id="mainText">
+                                            Merhaba {{name}},<br><br>
+
+                                            Aramıza hoş geldin BİLTEK'li!
+
+                                            Geleceğe açılan kapıya bilim ve teknoloji ışığında sen de bir adım atmaya hazır mısın?
+                                            
+                                            Bilim ve Teknoloji Kulübü olarak seni ailemizde gördüğümüz için çok mutluyuz.
+                                            
+                                            Aydınlık bir geleceğe doğru yürüdüğümüz bu yolda BİLTEK ailesiyle birlikte yürüyecek olmanın heyecanıyla beraber gerçekleştireceğimiz projeler için sabırsızlanıyoruz.
+                                            
+                                            Tekrar bir araya gelene kadar kendine iyi bak!
+                                            
+                                            Etkinliklerimizden haberdar olmak için sosyal medya hesaplarımız takip etmeyi unutma! https://linktr.ee/biltek
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                </tr>
+                                <td class="top-padding">
+                                    <hr size="1" color="#eeeff0">
+                                </td>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="socialArea">
+                            <table>
+
+                                <tr>Bilim ve Teknoloji Kulübü
+                                    <td>
+
+                                        <table>
+                                            <tr>
+                                                <td class="icon"><a href="https://twitter.com/Aybubiltek"><img
+                                                            src="https://info.tenable.com/rs/tenable/images/twitter-teal.png"></a>
+                                                </td>
+                                                <td class="icon"><a
+                                                        href="https://www.youtube.com/channel/UCXnCrwOdwtJF0wZiIQbz2-A"><img
+                                                            src="https://info.tenable.com/rs/tenable/images/youtube-teal.png"></a>
+                                                </td>
+                                                <td class="icon"><a
+                                                        href="https://tr.linkedin.com/company/aybubiltek"><img
+                                                            src="https://info.tenable.com/rs/tenable/images/linkedin-teal.png"></a>
+                                                </td>
+                                            </tr>
+
+                                        </table>
+
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</body>
+
+</html>

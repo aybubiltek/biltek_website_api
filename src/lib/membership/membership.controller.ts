@@ -38,7 +38,10 @@ export class MemberShipController implements IController {
                     const resp2 = await mailgun.addMember("deneme", memberShipDto.name_surname, memberShipDto.email)
     
                     if (resp2) {
-                        const resp3 = await mailgun.sendMessageWithText("info@aybubiltek.com", "Bilim ve Teknoloji Kulübü", memberShipDto.email, "Welcome", "Deneme")
+                        const inline_path = ["welcome.image.png", "aybulogo.png"]
+                        const resp3 = await mailgun.sendMessageWithHtml("info@aybubiltek.com", "Bilim ve Teknoloji Kulübü", memberShipDto.email, "Welcome", "welcome.template.handlebars", {
+                            name:memberShipDto.name_surname
+                        },inline_path)
                     }
                 }
     
