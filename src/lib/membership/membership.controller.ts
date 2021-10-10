@@ -45,14 +45,15 @@ export class MemberShipController implements IController {
                     }
                 }
     
-                res.json({
+                res.status(201).json({
                     status: "success",
-                    data: result
+                    //data: result
+                    message:"Kaydınız başarılı bir şekilde gerçekleşti. Aramıza hoşgeldiniz :)"
                 })
             } else {
-                res.json({
+                res.status(400).json({
                     status: "success",
-                    message: "You are already registered"
+                    message: "Mail adresiniz sistemimizde kayıtlıdır"
                 })
             }
             
