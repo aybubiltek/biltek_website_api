@@ -34,8 +34,8 @@ export class MemberShipController implements IController {
                 const result = await this._memberShipService.create(memberShipDto, {})
 
                 if (result !== null) {
-                    await mailgun.createList("deneme", "")
-                    const resp2 = await mailgun.addMember("deneme", memberShipDto.name_surname, memberShipDto.email)
+                    await mailgun.createList("2021_2022", "2021-2022 dönemi kayıtlar")
+                    const resp2 = await mailgun.addMember("2021_2022", memberShipDto.name_surname, memberShipDto.email)
     
                     if (resp2) {
                         const inline_path = ["welcome.image.png", "aybulogo.png"]
