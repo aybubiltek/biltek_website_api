@@ -15,6 +15,7 @@ export class WorkerDto implements IModel{
     @MinLength(5, {message:"It can not less then 5"})
     name_surname:string
 
+    @IsOptional()
     @IsEmail()
     @IsString()
     email:string

@@ -30,14 +30,14 @@ export class Speaker{
     collation: {locale: "tr"},
     timestamps: true, 
     toJSON: {virtuals: true}, 
-    toObject: {virtuals: true}
+    toObject: {virtuals: true},
 }})
 export class Event{
     @prop({
         type: () => String, 
         required:true, 
         unique:true, 
-        trim:true
+        trim:true,
     })
     public name:string
 

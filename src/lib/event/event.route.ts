@@ -54,6 +54,11 @@ export class EventRoute implements IRoute {
             this._eventController.getEventById
         )
 
+        this._eventController.router.get(
+            "/active",
+            this._eventController.getActiveEvent
+        )
+
         return this._eventController.router
     }
 
