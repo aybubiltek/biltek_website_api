@@ -107,6 +107,22 @@ export class EventController implements IController{
         }
     }
 
+    public getActiveEvent = async (req:PublicRequest, res:Response, next: NextFunction) => {
+        try {
+            const result = await this._eventService.find({isActive:true}, {createdAt:0, updatedAt:0}, {lean:true, sort:{name:1}})
+
+            res.status(200).json({
+                status: "success",
+                data: result
+            })
+        } catch (error) {
+            res.status(400).json({
+                status: "error",
+                msg:error
+            })
+        }
+    }
+
 
 
 }

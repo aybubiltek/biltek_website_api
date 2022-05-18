@@ -43,8 +43,8 @@ export class UserRoute implements IRoute {
 
     this._userController.router.post(
       "/register",
-      /*checkIsLoggedIn(),
-      checkAcl(),*/
+      checkIsLoggedIn(),
+      checkAcl(),
       this._userController.register
     );
 

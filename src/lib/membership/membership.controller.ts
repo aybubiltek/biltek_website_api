@@ -34,22 +34,26 @@ export class MemberShipController implements IController {
                 const result = await this._memberShipService.create(memberShipDto, {})
 
                 if (result !== null) {
-                    await mailgun.createList("deneme", "")
-                    const resp2 = await mailgun.addMember("deneme", memberShipDto.name_surname, memberShipDto.email)
+                    await mailgun.createList("2021_2022", "2021-2022 dönemi kayıtlar")
+                    const resp2 = await mailgun.addMember("2021_2022", memberShipDto.name_surname, memberShipDto.email)
     
                     if (resp2) {
-                        const resp3 = await mailgun.sendMessageWithText("info@aybubiltek.com", "Bilim ve Teknoloji Kulübü", memberShipDto.email, "Welcome", "Deneme")
+                        const inline_path = ["welcome.image.png", "aybulogo.png"]
+                        const resp3 = await mailgun.sendMessageWithHtml("info@aybubiltek.com", "Bilim ve Teknoloji Kulübü", memberShipDto.email, `Hoş geldin ${memberShipDto.name_surname}`, "welcome.template.handlebars", {
+                            name:memberShipDto.name_surname
+                        },inline_path)
                     }
                 }
     
-                res.json({
+                res.status(201).json({
                     status: "success",
-                    data: result
+                    //data: result
+                    message:"Kaydınız başarılı bir şekilde gerçekleşti. Aramıza hoşgeldiniz Biltek'li :)"
                 })
             } else {
-                res.json({
+                res.status(400).json({
                     status: "success",
-                    message: "You are already registered"
+                    message: "Mail adresiniz sistemimizde kayıtlıdır"
                 })
             }
             

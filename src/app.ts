@@ -1,4 +1,4 @@
-import express, { Application} from "express";
+import express, { Application, Request, Response} from "express";
 import session, {Store} from "express-session";
 import connectRedis from "connect-redis";
 import Redis from "ioredis";
@@ -12,6 +12,7 @@ import mongo_connection from "./database/mongo.database";
 import { REDIS_OPTIONS, SESSION_OPTIONS } from "./config";
 import { prepareDatabase } from "./scripts/migration/schools/main";
 import { cpus } from "os";
+import { NextFunction } from 'express';
 
 class Api {
     public api: Application
@@ -25,6 +26,7 @@ class Api {
         this.sessionSetup(this.redisSetup());
         this.routeConfig();
         this.mongoSetup();
+        this.errorHandler()
         console.log(process.env.UV_THREADPOOL_SIZE)
         process.env.UV_THREADPOOL_SIZE = cpus().length as any
         console.log(process.env.UV_THREADPOOL_SIZE)
@@ -83,6 +85,16 @@ class Api {
 
     private sessionSetup = (store:Store) => {
         this.api.use(session({...SESSION_OPTIONS, store}))
+    }
+
+    private errorHandler = () => {
+        this.api.use((err:Error, req:Request, res:Response, next:NextFunction) => {
+            if (process.env.NODE_ENV === "development") {
+                console.error(err.stack)
+                res.status(500).send(err.message)
+            }
+            res.status(500).send('Something broke!')
+          })
     }
 
     private migration = async () => {
