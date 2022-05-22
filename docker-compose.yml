@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  api:
+    container_name: api
+    image: api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "4446:4446"
+  redis:
+    image: redislabs/rejson:latest
+    ports:
+      - 6379:6379
+    restart: always
+    volumes:
+      - ~/Docker/volumes/biltek-data:/redislabs
+volumes:
+  redis-data:
+    driver: local
