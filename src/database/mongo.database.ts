@@ -1,4 +1,4 @@
-import mongoose, { Connection, ConnectionOptions } from "mongoose";
+import mongoose, { Connection, ConnectOptions } from "mongoose";
 import { MONGODB_URI_DEVEL, MONGODB_URI_PROD } from "../config";
 import { IConnection } from './IConnection';
 
@@ -12,16 +12,10 @@ class MongoConnection implements IConnection {
     public async connection(): Promise<void> {
         mongoose.Promise = global.Promise
 
-        const options: ConnectionOptions = {
+        const options: ConnectOptions = {
 
             noDelay: true,
-            ha:true,
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true,
             autoIndex: false,
-            poolSize: 10,
-            serverSelectionTimeoutMS: 5000,
             socketTimeoutMS: 45000,
             family: 4,
             keepAlive: true,
